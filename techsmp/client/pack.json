@@ -1,0 +1,7 @@
+{
+  "name": "TechSMP",
+  "version": "1.0.0",
+  "summary": "TechSMP 生電服客戶端模組包:Litematica / MiniHUD / Tweakeroo / Syncmatica / VeinMiner Hotkey",
+  "minecraft": "26.3",
+  "fabric-loader": "0.20.1"
+}

@@ -1,0 +1,21 @@
+# TechSMP 客戶端模組包(Minecraft 26.3 + Fabric)
+# 格式和 docker-compose.yml 的 MODRINTH_PROJECTS 相同:<modrinth slug>:<version ID>
+# 版本 ID 從 https://modrinth.com/mod/<slug>/versions 或 Modrinth API 查。
+# 改完後跑:python3 tools/build-mrpack.py techsmp/client
+# Servux 只裝伺服器，不放這裡。
+
+# 基礎
+fabric-api:Zns5SSRA              # 0.166.2+26.3
+fabric-language-kotlin:SKW1BTL3  # 1.14.2+kotlin.2.4.21(VeinMiner 需要)
+
+# masa 系(Litematica 生存建築)
+malilib:JX9bESec                 # 0.30.2
+litematica:ZqV316KY              # 0.29.1
+minihud:WfIgkxnf                 # 0.41.2
+tweakeroo:fWxKATn6               # 0.30.1
+item-scroller:MvoqaGhE           # 0.33.1
+syncmatica:uT7TJ2Wp              # 0.3.20(伺服器也有裝，版本要一致)
+
+# 連鎖挖礦(按住快捷鍵觸發，預設 Y,建議改成 `)
+veinminer:T4so6NOu               # 2.14.0(伺服器也有裝，版本要一致)
+veinminer-client:xdvMZKi6        # 2.14.0(VeinMiner Hotkey)

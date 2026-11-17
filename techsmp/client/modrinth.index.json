@@ -1,0 +1,163 @@
+{
+  "formatVersion": 1,
+  "game": "minecraft",
+  "versionId": "1.0.0",
+  "name": "TechSMP",
+  "summary": "TechSMP 生電服客戶端模組包:Litematica / MiniHUD / Tweakeroo / Syncmatica / VeinMiner Hotkey",
+  "files": [
+    {
+      "path": "mods/fabric-api-0.166.2+26.3.jar",
+      "hashes": {
+        "sha1": "65636253571429971f25f5619692e6c1a6362028",
+        "sha512": "fb686a9fa923248328107a12498229d6951e316257f18b7d0e4cbd6885ba447ed50a44076a8a5ba47cfe2043b329db3587ab000aeab1face26b2587a5d4ba6b5"
+      },
+      "env": {
+        "client": "required",
+        "server": "optional"
+      },
+      "downloads": [
+        "https://cdn.modrinth.com/data/P7dR8mSH/versions/Zns5SSRA/fabric-api-0.166.2%2B26.3.jar"
+      ],
+      "fileSize": 1797523
+    },
+    {
+      "path": "mods/fabric-language-kotlin-1.14.2+kotlin.2.4.21.jar",
+      "hashes": {
+        "sha1": "f1d4ab6ecd54d9782521333a87eb50724ecb03e0",
+        "sha512": "7fb475c4a7e7bdf8d0aca4b5798a58a354c51443d5b1fbde3e8cf34dfbf7191ef4238b5f07d08ec9490ec180b371624523326c3ad45d4ed2b2be541de9407e5d"
+      },
+      "env": {
+        "client": "required",
+        "server": "optional"
+      },
+      "downloads": [
+        "https://cdn.modrinth.com/data/Ha28R6CL/versions/SKW1BTL3/fabric-language-kotlin-1.14.2%2Bkotlin.2.4.21.jar"
+      ],
+      "fileSize": 8142878
+    },
+    {
+      "path": "mods/itemscroller-fabric-26.3-0.33.1.jar",
+      "hashes": {
+        "sha1": "84a14fbb2894ef06826ac5ff3226d5fc7b370cde",
+        "sha512": "1ef7eb99fbe3d44edb5ccc1881cdf3f4acb2fe8f9a54b1209c20c803a31b7a6d8832ab5a4b85e96d2d70014692e77ab15d178634a1d49acbbce15726e4c02c26"
+      },
+      "env": {
+        "client": "required",
+        "server": "unsupported"
+      },
+      "downloads": [
+        "https://cdn.modrinth.com/data/JygyCSA4/versions/MvoqaGhE/itemscroller-fabric-26.3-0.33.1.jar"
+      ],
+      "fileSize": 223938
+    },
+    {
+      "path": "mods/litematica-fabric-26.3-0.29.1.jar",
+      "hashes": {
+        "sha1": "2c0e37ef450b7fcea61e0fce482f134d1fe5a9c6",
+        "sha512": "45a8d468463afb97b3fc72efa168024ad69e670e77f5455ecf588583434a1787b32795edf5236579c32c828b02873efb39a4808caa08bbbaf1d8b6b090b160c3"
+      },
+      "env": {
+        "client": "required",
+        "server": "unsupported"
+      },
+      "downloads": [
+        "https://cdn.modrinth.com/data/bEpr0Arc/versions/ZqV316KY/litematica-fabric-26.3-0.29.1.jar"
+      ],
+      "fileSize": 1972556
+    },
+    {
+      "path": "mods/malilib-fabric-26.3-0.30.2.jar",
+      "hashes": {
+        "sha1": "832a00c0d6417d7f195fbe1b1c643bbd4893e64a",
+        "sha512": "8f17a5d70cb2f461aeb540f4a99de01c3351f8d3678d902d3d00cfe5d10c039fdc111c1079fe23aacb7936b793ad1cd045a8dc3a9e7926865820c254d92345b8"
+      },
+      "env": {
+        "client": "required",
+        "server": "unsupported"
+      },
+      "downloads": [
+        "https://cdn.modrinth.com/data/GcWjdA9I/versions/JX9bESec/malilib-fabric-26.3-0.30.2.jar"
+      ],
+      "fileSize": 2081094
+    },
+    {
+      "path": "mods/minihud-fabric-26.3-0.41.2.jar",
+      "hashes": {
+        "sha1": "be8c84a976462d3fb06c232eafbd74053c342b91",
+        "sha512": "bc69152a78b4b70c065415ff6695cf5285d769e33e8dbc2109d645c012cc811b55349966bf4598edaa514869caed1fdd38e17507239410f76740d7fd66b8c518"
+      },
+      "env": {
+        "client": "required",
+        "server": "unsupported"
+      },
+      "downloads": [
+        "https://cdn.modrinth.com/data/UMxybHE8/versions/WfIgkxnf/minihud-fabric-26.3-0.41.2.jar"
+      ],
+      "fileSize": 943101
+    },
+    {
+      "path": "mods/syncmatica-fabric-26.3-0.3.20.jar",
+      "hashes": {
+        "sha1": "554319fbea6c0f7e17c73a4fec4f984374da63dc",
+        "sha512": "7eb067b457123a221be27f1a41ea2480b8380ac07d3aba4d963343405b83ccfba26f8c292c680e48b8d52b97ddb37fca4ebd8e57e86c5ab89af58f3d229fafaa"
+      },
+      "env": {
+        "client": "required",
+        "server": "required"
+      },
+      "downloads": [
+        "https://cdn.modrinth.com/data/bfneejKo/versions/uT7TJ2Wp/syncmatica-fabric-26.3-0.3.20.jar"
+      ],
+      "fileSize": 633198
+    },
+    {
+      "path": "mods/tweakeroo-fabric-26.3-0.30.1.jar",
+      "hashes": {
+        "sha1": "2363766a77fd0e22dc377ef23a29b9789af24f9b",
+        "sha512": "190304ffcbee51ef7e6606fbb1060032fdebe78d3bcc2c60e84876f434b696c27fb2f8302c1179467f4622312bdfc609d31209e91b098fe5a61fc0148f0bdeb5"
+      },
+      "env": {
+        "client": "required",
+        "server": "unsupported"
+      },
+      "downloads": [
+        "https://cdn.modrinth.com/data/t5wuYk45/versions/fWxKATn6/tweakeroo-fabric-26.3-0.30.1.jar"
+      ],
+      "fileSize": 709011
+    },
+    {
+      "path": "mods/veinminer-client-fabric-2.14.0.jar",
+      "hashes": {
+        "sha1": "dee956b857717a22a480bfaae06c9ae4174f8661",
+        "sha512": "95a600c4fed1df6ea901528a1affec92291e651adb1bdbbaee20def2d73a2c1006f9321fe4efafae7046e4edb3c97aa80c114b78da9239a08c02c7207408baca"
+      },
+      "env": {
+        "client": "required",
+        "server": "unsupported"
+      },
+      "downloads": [
+        "https://cdn.modrinth.com/data/dxa0Bm8m/versions/xdvMZKi6/veinminer-client-fabric-2.14.0.jar"
+      ],
+      "fileSize": 265166
+    },
+    {
+      "path": "mods/veinminer-fabric-2.14.0.jar",
+      "hashes": {
+        "sha1": "a92238f85461834cd0d1c06e6e3305472ca0e481",
+        "sha512": "ba6e882f9935fd6b326ec139b0c0312874c00dc61773be30246d26523dd9528e350ecea6ec357831c52161a05af1ecf36c699a25e9b7f5c72a82ce0fed0a39db"
+      },
+      "env": {
+        "client": "required",
+        "server": "required"
+      },
+      "downloads": [
+        "https://cdn.modrinth.com/data/OhduvhIc/versions/T4so6NOu/veinminer-fabric-2.14.0.jar"
+      ],
+      "fileSize": 706462
+    }
+  ],
+  "dependencies": {
+    "minecraft": "26.3",
+    "fabric-loader": "0.20.1"
+  }
+}

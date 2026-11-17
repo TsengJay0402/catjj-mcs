@@ -1,0 +1,19 @@
+# 世界存檔、執行期資料(mod jar、函式庫、log、Ledger 資料庫…)不進 Git,由 mc-backup 負責
+*/data/
+techsmp/mirror-data/
+techsmp/backups/
+techsmp/logs/
+
+# Pekora 原始地圖備份(131 GB)
+zips/
+
+# 密碼
+.env
+
+# 產物：mrpack 由 GitHub Actions 建置後放在 Release
+dist/
+*.mrpack
+
+# 雜項
+__pycache__/
+*.pyc

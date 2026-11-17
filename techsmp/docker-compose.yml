@@ -1,0 +1,132 @@
+# 生電服 TechSMP (Fabric 26.3 + Carpet + Servux)
+# 規劃依據:/mnt/catjj/jay/mcs/reports/生電服 Litematica 伺服器規劃.md
+# 注意:Pekora 創造服在 ../pekora(port 25565),兩邊互不相干。
+# 設定檔以 Git repo 為準:./config(生存服)、./mirror-config(鏡像服)每次啟動都會覆蓋 data/config 裡的同名檔案。
+# 在遊戲內用指令改的設定，重啟後會被蓋回 repo 版本 —— 要改請改 repo 再重啟。
+x-mc-common: &mc-common
+  image: itzg/minecraft-server:latest
+  restart: unless-stopped
+  tty: true
+  stdin_open: true
+
+services:
+  mc:
+    <<: *mc-common
+    container_name: mc-techsmp
+    ports:
+      - "25566:25565"
+    mem_limit: 13g
+    environment:
+      EULA: "TRUE"
+      TZ: Asia/Taipei
+      UID: 1002
+      GID: 1002
+      TYPE: FABRIC
+      VERSION: "26.3"
+      FABRIC_LOADER_VERSION: "0.20.1"
+      MEMORY: 10G
+      USE_AIKAR_FLAGS: "true"
+      MOTD: "TechSMP 26.3 | Fabric + Carpet + Servux"
+      MODE: survival
+      DIFFICULTY: hard
+      MAX_PLAYERS: 10
+      VIEW_DISTANCE: 10
+      # 農場依此設計，定案後不要再改
+      SIMULATION_DISTANCE: 10
+      SPAWN_PROTECTION: 0
+      ONLINE_MODE: "true"
+      ENABLE_WHITELIST: "true"
+      WHITELIST: |
+        TsengJay0402
+      OPS: |
+        TsengJay0402
+      # 0 = 沒人在線也不暫停，掛機農場持續運作
+      PAUSE_WHEN_EMPTY_SECONDS: "0"
+      ENABLE_RCON: "true"
+      RCON_PASSWORD: "${RCON_PASSWORD}"
+      ENABLE_ROLLING_LOGS: "true"
+      # ./config 永遠覆蓋 data/config(itzg 預設會略過目的地較新的檔案)
+      SYNC_SKIP_NEWER_IN_DESTINATION: "false"
+      # 版本釘死(Modrinth version ID,2026-11-17 查證),避免重啟時自動升級導致客戶端對不上
+      MODRINTH_DOWNLOAD_DEPENDENCIES: required
+      MODRINTH_PROJECTS: |
+        fabric-api:Zns5SSRA
+        fabric-language-kotlin:SKW1BTL3
+        carpet:yt9oDFOj
+        carpet-tis-addition:Zo8yy53j
+        servux:azA4UG3T
+        syncmatica:uT7TJ2Wp
+        lithium:fWv5bnZk
+        ferrite-core:d5ddUdiB
+        ledger:pxv5cN0d
+        chunky:86FKD9qx
+        veinminer:T4so6NOu
+    volumes:
+      - ./data:/data
+      - ./config:/config:ro
+
+  # 創造鏡像服：世界由 refresh-mirror.sh 從生存服同步過來，用來測機器、用 Servux 帶 NBT 快速貼投影
+  mirror:
+    <<: *mc-common
+    container_name: mc-techsmp-mirror
+    ports:
+      - "25567:25565"
+    mem_limit: 8g
+    environment:
+      EULA: "TRUE"
+      TZ: Asia/Taipei
+      UID: 1002
+      GID: 1002
+      TYPE: FABRIC
+      VERSION: "26.3"
+      FABRIC_LOADER_VERSION: "0.20.1"
+      MEMORY: 6G
+      USE_AIKAR_FLAGS: "true"
+      MOTD: "TechSMP Mirror (creative)"
+      MODE: creative
+      FORCE_GAMEMODE: "true"
+      DIFFICULTY: hard
+      MAX_PLAYERS: 10
+      VIEW_DISTANCE: 10
+      SIMULATION_DISTANCE: 10
+      SPAWN_PROTECTION: 0
+      ONLINE_MODE: "true"
+      ENABLE_WHITELIST: "true"
+      WHITELIST: |
+        TsengJay0402
+      OPS: |
+        TsengJay0402
+      PAUSE_WHEN_EMPTY_SECONDS: "0"
+      ENABLE_ROLLING_LOGS: "true"
+      SYNC_SKIP_NEWER_IN_DESTINATION: "false"
+      MODRINTH_DOWNLOAD_DEPENDENCIES: required
+      MODRINTH_PROJECTS: |
+        fabric-api:Zns5SSRA
+        carpet:yt9oDFOj
+        carpet-tis-addition:Zo8yy53j
+        servux:azA4UG3T
+        syncmatica:uT7TJ2Wp
+        lithium:fWv5bnZk
+        ferrite-core:d5ddUdiB
+    volumes:
+      - ./mirror-data:/data
+      - ./mirror-config:/config:ro
+
+  backup:
+    image: itzg/mc-backup
+    container_name: mc-techsmp-backup
+    restart: unless-stopped
+    hostname: techsmp-backup
+    depends_on: [mc]
+    environment:
+      TZ: Asia/Taipei
+      RCON_HOST: mc
+      RCON_PASSWORD: "${RCON_PASSWORD}"
+      BACKUP_METHOD: tar
+      TAR_COMPRESS_METHOD: zstd
+      BACKUP_INTERVAL: "3h"
+      INITIAL_DELAY: "5m"
+      PRUNE_BACKUPS_DAYS: 14
+    volumes:
+      - ./data:/data:ro
+      - ./backups:/backups

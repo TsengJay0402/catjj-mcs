@@ -1,0 +1,53 @@
+# TechSMP 客戶端模組包
+# - 改到 techsmp/client/ 時：檢查 modrinth.index.json 是否和 mods.txt 一致，並把 .mrpack 放在 Actions artifact
+# - 推 tag techsmp-client-v<版本>(要和 pack.json 的 version 相同):自動建立 GitHub Release 並附上 .mrpack
+name: TechSMP client pack
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "techsmp/client/**"
+      - "tools/build-mrpack.py"
+      - ".github/workflows/techsmp-client.yml"
+    tags: ["techsmp-client-v*"]
+  pull_request:
+    paths:
+      - "techsmp/client/**"
+      - "tools/build-mrpack.py"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check index is up to date
+        run: python3 tools/build-mrpack.py techsmp/client --check
+
+      - name: Check tag matches pack version
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          v=$(python3 -c "import json;print(json.load(open('techsmp/client/pack.json'))['version'])")
+          if [ "${GITHUB_REF_NAME#techsmp-client-v}" != "$v" ]; then
+            echo "::error::tag ${GITHUB_REF_NAME} 和 pack.json version ${v} 不一致"; exit 1
+          fi
+
+      - name: Build mrpack
+        run: python3 tools/build-mrpack.py techsmp/client --out dist
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: TechSMP-mrpack
+          path: dist/*.mrpack
+
+      - name: Publish release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*.mrpack
+          generate_release_notes: true
