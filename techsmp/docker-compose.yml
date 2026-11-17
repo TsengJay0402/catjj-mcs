@@ -1,6 +1,6 @@
 # 生電服 TechSMP (Fabric 26.3 + Carpet + Servux)
 # 規劃依據:/mnt/catjj/jay/mcs/reports/生電服 Litematica 伺服器規劃.md
-# 注意:Pekora 創造服在 ../pekora(port 25565),兩邊互不相干。
+# 主機相關的值(UID/GID、port、記憶體)由同目錄的 .env 設定，見 .env.example;部署到新主機請看 部署說明.md。
 # 設定檔以 Git repo 為準:./config(生存服)、./mirror-config(鏡像服)每次啟動都會覆蓋 data/config 裡的同名檔案。
 # 在遊戲內用指令改的設定，重啟後會被蓋回 repo 版本 —— 要改請改 repo 再重啟。
 x-mc-common: &mc-common
@@ -14,17 +14,17 @@ services:
     <<: *mc-common
     container_name: mc-techsmp
     ports:
-      - "25566:25565"
-    mem_limit: 13g
+      - "${MC_PORT:-25566}:25565"
+    mem_limit: ${MC_MEM_LIMIT:-13g}
     environment:
       EULA: "TRUE"
       TZ: Asia/Taipei
-      UID: 1002
-      GID: 1002
+      UID: ${MC_UID:-1002}
+      GID: ${MC_GID:-1002}
       TYPE: FABRIC
       VERSION: "26.3"
       FABRIC_LOADER_VERSION: "0.20.1"
-      MEMORY: 10G
+      MEMORY: ${MC_MEMORY:-10G}
       USE_AIKAR_FLAGS: "true"
       MOTD: "TechSMP 26.3 | Fabric + Carpet + Servux"
       MODE: survival
@@ -70,17 +70,17 @@ services:
     <<: *mc-common
     container_name: mc-techsmp-mirror
     ports:
-      - "25567:25565"
-    mem_limit: 8g
+      - "${MIRROR_PORT:-25567}:25565"
+    mem_limit: ${MIRROR_MEM_LIMIT:-8g}
     environment:
       EULA: "TRUE"
       TZ: Asia/Taipei
-      UID: 1002
-      GID: 1002
+      UID: ${MC_UID:-1002}
+      GID: ${MC_GID:-1002}
       TYPE: FABRIC
       VERSION: "26.3"
       FABRIC_LOADER_VERSION: "0.20.1"
-      MEMORY: 6G
+      MEMORY: ${MIRROR_MEMORY:-6G}
       USE_AIKAR_FLAGS: "true"
       MOTD: "TechSMP Mirror (creative)"
       MODE: creative
