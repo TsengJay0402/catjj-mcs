@@ -1,21 +1,62 @@
 # TechSMP 客戶端模組包(Minecraft 26.3 + Fabric)
-# 格式和 docker-compose.yml 的 MODRINTH_PROJECTS 相同:<modrinth slug>:<version ID>
-# 版本 ID 從 https://modrinth.com/mod/<slug>/versions 或 Modrinth API 查。
+# 每行 <modrinth slug>:<version ID> [optional],# 之後是註解。版本 ID 從 https://modrinth.com/mod/<slug>/versions 查。
+#   沒標 optional:必裝。伺服器功能要用的、純效能(不改玩法和畫面)的、函式庫。
+#   optional     :選用。Prism Launcher 匯入時會跳勾選視窗(預設全不勾，沒勾的以停用狀態裝進去，之後可在 Mods 頁打開);
+#                  Modrinth App 不會問，會全部裝上並啟用，不要的到實例的 Content 頁關掉。
+#   必裝模組不能依賴選用模組，函式庫一律必裝(建置時會檢查)。
 # 改完後跑:python3 tools/build-mrpack.py techsmp/client
-# Servux 只裝伺服器，不放這裡。
+#
+# 不放進模組包(想用的人自己加到實例):
+#   Servux           只裝伺服器
+#   Distant Horizons 很吃 CPU 和硬碟，看電腦決定
+#   Replay Mod       預設一進伺服器就自動錄影，會默默佔硬碟
+#   Freecam          Tweakeroo 已有 Free Camera(tweakFreeCamera)
 
-# 基礎
-fabric-api:Zns5SSRA              # 0.166.2+26.3
-fabric-language-kotlin:SKW1BTL3  # 1.14.2+kotlin.2.4.21(VeinMiner 需要)
+# ── 函式庫 ──
+fabric-api:Zns5SSRA                  # 0.166.2+26.3
+fabric-language-kotlin:SKW1BTL3      # 1.14.2(VeinMiner、Inventory Profiles Next、Zoomify 需要)
+placeholder-api:lXytLqWj             # 3.2.0(Mod Menu 需要)
+yacl:s9SjoFu1                        # 3.9.7(Zoomify 需要)
+libipn:aKBFonyQ                      # 6.9.0(Inventory Profiles Next 需要)
+mezzconfig:26GXFp06                  # 0.7.1(JEI 需要)
 
-# masa 系(Litematica 生存建築)
-malilib:JX9bESec                 # 0.30.2
-litematica:ZqV316KY              # 0.29.1
-minihud:WfIgkxnf                 # 0.41.2
-tweakeroo:fWxKATn6               # 0.30.1
-item-scroller:MvoqaGhE           # 0.33.1
-syncmatica:uT7TJ2Wp              # 0.3.20(伺服器也有裝，版本要一致)
+# ── masa 系(Litematica 生存建築，搭配伺服器的 Servux)──
+malilib:JX9bESec                     # 0.30.2
+litematica:ZqV316KY                  # 0.29.1
+minihud:WfIgkxnf                     # 0.41.2
+tweakeroo:fWxKATn6                   # 0.30.1
+item-scroller:MvoqaGhE               # 0.33.1
+syncmatica:uT7TJ2Wp                  # 0.3.20(伺服器也有裝，版本要一致)
 
-# 連鎖挖礦(按住快捷鍵觸發，預設 Y,建議改成 `)
-veinminer:T4so6NOu               # 2.14.0(伺服器也有裝，版本要一致)
-veinminer-client:xdvMZKi6        # 2.14.0(VeinMiner Hotkey)
+# ── 連鎖挖礦(按住快捷鍵觸發，預設 Y,建議改成 `)──
+veinminer:T4so6NOu                   # 2.14.0(伺服器也有裝，版本要一致)
+veinminer-client:xdvMZKi6            # 2.14.0(VeinMiner Hotkey)
+
+# ── 效能(只影響自己的客戶端)──
+sodium:bAZQdGpg                      # 0.9.2(Iris 1.11.7 指定這版，不要換成 0.9.3 beta)
+immediatelyfast:3MP9UR23             # 1.17.1
+entityculling:X1g3VhTx               # 1.11.3
+ferrite-core:d5ddUdiB                # 9.0.0(伺服器也有裝)
+dynamic-fps:Jwq069rR                 # 3.11.10(視窗沒焦點時降 FPS,不影響伺服器上的機器)
+
+# ── 介面 ──
+modmenu:xckkBHD5                     # 21.0.1(打開各模組設定畫面)
+shulkerboxtooltip:60krd8u8           # 5.4.3(界伏盒內容預覽)
+
+# ── 選用:資訊與地圖 ──
+xaeros-minimap:MfxfgXaO optional     # 26.6.2
+xaeros-world-map:VM8lNSSM optional   # 1.47.2
+jade:71CTWqdE optional               # 26.3.5(準心指到的方塊/生物資訊)
+appleskin:PHjDtQay optional          # 3.0.10(飽食度)
+jei:Zebwcvua optional                # 31.14.0.72(合成表)
+
+# ── 選用:物品欄(和 Item Scroller / Tweakeroo 的功能有重疊，衝突時關掉其中一邊的同類功能)──
+mouse-tweaks:LeMuMhLv optional       # 2.31
+inventory-profiles-next:y8vT21Sb optional  # 2.3.8
+
+# ── 選用:畫面 ──
+zoomify:RUBpNu00 optional            # 2.17.0(Tweakeroo 也有 tweakZoom)
+continuity:Jt2sCWTQ optional         # 3.0.1(連接材質)
+lambdynamiclights:rylKnJ4M optional  # 4.13.0(手持光源)
+iris:vTN4NRGW optional               # 1.11.7(光影)
+complementary-reimagined:Bqen1mJX optional  # r5.9.3(光影包，要在 Iris 裡選才會啟用)
