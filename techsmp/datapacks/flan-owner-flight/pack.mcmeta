@@ -1,0 +1,7 @@
+{
+  "pack": {
+    "description": "Allow Flan claim owners to use flight",
+    "min_format": [82, 0],
+    "max_format": [9999, 0]
+  }
+}
