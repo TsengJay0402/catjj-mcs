@@ -1,20 +1,22 @@
 # TechSMP 客戶端模組包(Minecraft 26.3 + Fabric)
-# 每行 <modrinth slug>:<version ID> [optional],# 之後是註解。版本 ID 從 https://modrinth.com/mod/<slug>/versions 查。
+# 每行 <Modrinth slug>:<version ID> [optional],# 之後是註解。可列 mod、資源包與光影。
+# 版本 ID 從 https://modrinth.com/mod/<slug>/versions 查。
 #   沒標 optional:必裝。伺服器功能要用的、純效能(不改玩法和畫面)的、函式庫。
 #   optional     :選用。Prism Launcher 匯入時會跳勾選視窗(預設全不勾，沒勾的以停用狀態裝進去，之後可在 Mods 頁打開);
 #                  Modrinth App 不會問，會全部裝上並啟用，不要的到實例的 Content 頁關掉。
 #   必裝模組不能依賴選用模組，函式庫一律必裝(建置時會檢查)。
+# ⚠ 遠視距、光影、高解析材質和立體葉片可能增加電腦負荷;官方規格見 performance-guide.md。
 # 改完後跑:python3 tools/build-mrpack.py techsmp/client
 #
+# 非 Modrinth 官方下載見 external-assets.json；手動安裝項目見 curseforge-assets.md。
 # 不放進模組包(想用的人自己加到實例):
 #   Servux           只裝伺服器
-#   Distant Horizons 很吃 CPU 和硬碟，看電腦決定
 #   Replay Mod       預設一進伺服器就自動錄影，會默默佔硬碟
-#   Freecam          Tweakeroo 已有 Free Camera(tweakFreeCamera)
 
 # ── 函式庫 ──
 fabric-api:Zns5SSRA                  # 0.166.2+26.3
 fabric-language-kotlin:SKW1BTL3      # 1.14.2(VeinMiner、Inventory Profiles Next、Zoomify 需要)
+cloth-config:eZ3xIIuk                # 26.3.158+fabric(More Culling 需要)
 placeholder-api:lXytLqWj             # 3.2.0(Mod Menu 需要)
 yacl:s9SjoFu1                        # 3.9.7(Zoomify 需要)
 libipn:aKBFonyQ                      # 6.9.0(Inventory Profiles Next 需要)
@@ -35,7 +37,9 @@ veinminer-client:xdvMZKi6            # 2.14.0(VeinMiner Hotkey)
 # ── 效能(只影響自己的客戶端)──
 sodium:bAZQdGpg                      # 0.9.2(Iris 1.11.7 指定這版，不要換成 0.9.3 beta)
 immediatelyfast:3MP9UR23             # 1.17.1
-entityculling:X1g3VhTx               # 1.11.3
+entityculling:UWpkLRV5               # 1.12.1
+moreculling:5jIORlSK optional        # 1.9.1
+modernfix-mvus:pa9cAfYg optional     # 5.27.20-build.2
 ferrite-core:d5ddUdiB                # 9.0.0(伺服器也有裝)
 dynamic-fps:Jwq069rR                 # 3.11.10(視窗沒焦點時降 FPS,不影響伺服器上的機器)
 
@@ -54,9 +58,20 @@ jei:Zebwcvua optional                # 31.14.0.72(合成表)
 mouse-tweaks:LeMuMhLv optional       # 2.31
 inventory-profiles-next:y8vT21Sb optional  # 2.3.8
 
-# ── 選用:畫面 ──
+# ── 選用:畫面/光影(會增加 GPU 負荷；官方未列統一最低配置，詳見 performance-guide.md)──
 zoomify:RUBpNu00 optional            # 2.17.0(Tweakeroo 也有 tweakZoom)
 continuity:Jt2sCWTQ optional         # 3.0.1(連接材質)
 lambdynamiclights:rylKnJ4M optional  # 4.13.0(手持光源)
 iris:vTN4NRGW optional               # 1.11.7(光影)
-complementary-reimagined:Bqen1mJX optional  # r5.9.3(光影包，要在 Iris 裡選才會啟用)
+bliss-shader:kC2Y8q1P optional       # 2.1.2(光影包，要在 Iris 裡選才會啟用)
+complementary-reimagined:RKfUB9VC optional  # r5.10(光影包，要在 Iris 裡選才會啟用)
+photon-shader:BnGklH5y optional      # v1.4(光影包，要在 Iris 裡選才會啟用)
+
+# ── 選用:資源包 ──
+better-lanterns:QTHWcFmF optional    # 1.4.0
+enchantment-glows:uaBnfTpO optional  # 1.12.1
+fancyfast-bushy-leaves:ZucFW9JT optional # v4.3(立體樹葉；需 Fancy Leaves，建議搭配 More Culling)
+
+# ── 選用:視距與鏡頭 ──
+distanthorizons:TGgEbP9A optional    # 3.3.4(高負荷；官方卡頓建議：4–8 核分配 6–8GB RAM、10+ 核分配 12–16GB 給 Minecraft；非最低規格)
+freecam:lwrkvqym optional            # 1.5.1(Tweakeroo 也有 Free Camera)

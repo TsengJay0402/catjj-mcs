@@ -37,6 +37,9 @@ services:
       SPAWN_PROTECTION: 0
       ONLINE_MODE: "true"
       ENABLE_WHITELIST: "false"
+      RESOURCE_PACK: "https://cdn.modrinth.com/data/J4cajZTT/versions/V7mMLusx/ModernArch%20v4.7.2%20%5B26.3%5D%20%5B128x%5D.zip"
+      RESOURCE_PACK_SHA1: "31e41f10829296076cda7c5e30983068076aafe6"
+      RESOURCE_PACK_ENFORCE: "false"
       OPS: |
         TsengJay0402
       # 0 = 沒人在線也不暫停，掛機農場持續運作

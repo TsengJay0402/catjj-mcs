@@ -1,10 +1,25 @@
 {
   "formatVersion": 1,
   "game": "minecraft",
-  "versionId": "1.1.0",
+  "versionId": "1.2.0",
   "name": "TechSMP",
-  "summary": "TechSMP 生電服客戶端模組包:Litematica / MiniHUD / Tweakeroo / Syncmatica / VeinMiner Hotkey + 效能模組，另有選用的地圖、物品欄、光影模組",
+  "summary": "TechSMP 客戶端包：建築/生電工具與視覺選項。注意：遠視距、光影、高解析材質會增加電腦負荷；Distant Horizons 官方建議 Minecraft 分配 RAM（4–8 核：6–8GB；10+ 核：12–16GB），其他項目未公布最低規格。",
   "files": [
+    {
+      "path": "mods/DistantHorizons-3.3.4-26.3-fabric-neoforge.jar",
+      "hashes": {
+        "sha1": "310c0363068dfae18e91f799ed671a591b6ad49a",
+        "sha512": "0b90b1b08d99974bfc3c8e86b2ceb252e2f91715ed66b925004c28335fb44e1bddbbb6b8043e4d4d53c87ed247789cd1788b1ba4e3f4394efe154e0c59cff236"
+      },
+      "env": {
+        "client": "optional",
+        "server": "optional"
+      },
+      "downloads": [
+        "https://cdn.modrinth.com/data/uCdwusMi/versions/TGgEbP9A/DistantHorizons-3.3.4-26.3-fabric-neoforge.jar"
+      ],
+      "fileSize": 28476894
+    },
     {
       "path": "mods/ImmediatelyFast-Fabric-1.17.1+26.3.jar",
       "hashes": {
@@ -81,6 +96,21 @@
       "fileSize": 180194
     },
     {
+      "path": "mods/cloth-config-26.3.158.jar",
+      "hashes": {
+        "sha1": "41596f189fbea3bb835a8fd62619ee4092ff4882",
+        "sha512": "baceff3b69ac4277831b7fc150a485e54492d987e778a33330a3b75354bcf2b3d0c968519645be919013243e766a35cf638caa418a46a9f81c9099f0728d3d03"
+      },
+      "env": {
+        "client": "required",
+        "server": "optional"
+      },
+      "downloads": [
+        "https://cdn.modrinth.com/data/9s6osm5g/versions/eZ3xIIuk/cloth-config-26.3.158.jar"
+      ],
+      "fileSize": 1134981
+    },
+    {
       "path": "mods/continuity-3.0.1+26.3.jar",
       "hashes": {
         "sha1": "63d51781b2c87e3b4b4ca98a133db8c98d3f2afb",
@@ -111,19 +141,19 @@
       "fileSize": 189474
     },
     {
-      "path": "mods/entityculling-fabric-1.11.3-mc26.3.jar",
+      "path": "mods/entityculling-fabric-1.12.1-mc26.3.jar",
       "hashes": {
-        "sha1": "45f47f7a067f5efd733a32767dc3d1d770678b2a",
-        "sha512": "b6209bb62d72376d3fd284da137ec93a6dd38ebe5fd38ab9190deeade68b5b7f4bf915f4abcb4a807afe18cb9f0b59e11be789d46df6f0e6f64388ed2edc284d"
+        "sha1": "de9005580599906b55ff241bdf8cb27da999939a",
+        "sha512": "c56e2a19fa98b8ee85d7f46b74966a272f03ec9a8edacd4a6eb629970f19fd4d2a9bddeacb8405f9abdb790a40895244927a28cf5dbbe4dcb65a0b307f493fcb"
       },
       "env": {
         "client": "required",
         "server": "unsupported"
       },
       "downloads": [
-        "https://cdn.modrinth.com/data/NNAgCjsB/versions/X1g3VhTx/entityculling-fabric-1.11.3-mc26.3.jar"
+        "https://cdn.modrinth.com/data/NNAgCjsB/versions/UWpkLRV5/entityculling-fabric-1.12.1-mc26.3.jar"
       ],
-      "fileSize": 1508547
+      "fileSize": 1522184
     },
     {
       "path": "mods/fabric-api-0.166.2+26.3.jar",
@@ -169,6 +199,21 @@
         "https://cdn.modrinth.com/data/uXXizFIs/versions/d5ddUdiB/ferritecore-9.0.0-fabric.jar"
       ],
       "fileSize": 72677
+    },
+    {
+      "path": "mods/freecam-fabric-1.5.1+mc26.3.jar",
+      "hashes": {
+        "sha1": "507cb204ffc411c81f94c890370a54d04ff59efb",
+        "sha512": "bc7bf23c41e5c3ddb43f4b455ff7d4d061cff8b574ff33aef0450a2c5ab9acd992020a9ffe6c0478993248861ee1232a85f7d64f19ad9c4e1f37d6cbdfbcb3b1"
+      },
+      "env": {
+        "client": "optional",
+        "server": "unsupported"
+      },
+      "downloads": [
+        "https://cdn.modrinth.com/data/XeEZ3fK2/versions/lwrkvqym/freecam-fabric-1.5.1%2Bmc26.3.jar"
+      ],
+      "fileSize": 2010574
     },
     {
       "path": "mods/iris-fabric-1.11.7+mc26.3.jar",
@@ -306,6 +351,21 @@
       "fileSize": 943101
     },
     {
+      "path": "mods/modernfix-5.27.20-build.2.jar",
+      "hashes": {
+        "sha1": "b63337e801fbf2cb420a049d69220c56e083f514",
+        "sha512": "b586434056107aac4ef86e9351d66170dac65a45a1e5f8bd48fb931b3012ab2431b16476eb9c256773339e2b4c60f6f3e90a4709180f700b2aea59ff607f4243"
+      },
+      "env": {
+        "client": "optional",
+        "server": "optional"
+      },
+      "downloads": [
+        "https://cdn.modrinth.com/data/TjSm1wrD/versions/pa9cAfYg/modernfix-5.27.20-build.2.jar"
+      ],
+      "fileSize": 1168784
+    },
+    {
       "path": "mods/modmenu-21.0.1.jar",
       "hashes": {
         "sha1": "884ab621735264187ccbfc87017cf55bb54d47ee",
@@ -319,6 +379,21 @@
         "https://cdn.modrinth.com/data/mOgUt4GM/versions/xckkBHD5/modmenu-21.0.1.jar"
       ],
       "fileSize": 862761
+    },
+    {
+      "path": "mods/moreculling-fabric-26.3-1.9.1.jar",
+      "hashes": {
+        "sha1": "2c768b910eb1cb3fcb880bcacc7dbf9c0678ce06",
+        "sha512": "93ae8cfe7b07391ca2966a86a60798fe7f37c2092545ed52a74d01a405b66cc5ecb236e303dc5c966a5d1ac20480e88c4f35b1d7b75a31c790a32bf58551a909"
+      },
+      "env": {
+        "client": "optional",
+        "server": "unsupported"
+      },
+      "downloads": [
+        "https://cdn.modrinth.com/data/51shyZVL/versions/5jIORlSK/moreculling-fabric-26.3-1.9.1.jar"
+      ],
+      "fileSize": 297173
     },
     {
       "path": "mods/placeholder-api-3.2.0+26.3.jar",
@@ -486,19 +561,109 @@
       "fileSize": 579146
     },
     {
-      "path": "shaderpacks/ComplementaryReimagined_r5.9.3.zip",
+      "path": "resourcepacks/Better Lanterns v1.4.0 - 26.2+26.3.zip",
       "hashes": {
-        "sha1": "838139b54cddb56b2e83cd260d8efd960ac536d6",
-        "sha512": "45304b1d7862afdb2177b7e6226fc9c6737911d17a4ad46cc9c519ca4deb935f05072cd337cd8b19a15bb8062b57b54eceec7bdee4cd572d94858e2946d37d85"
+        "sha1": "43da6ce48bbaa61492d47d0e2b47768287ec69ad",
+        "sha512": "1f921750d4507d0a7ebccc0c5b397373e90d1f11c9d94b6c2a006cf61c3a1e2a597c9412eb5bedd21fbbeb7eafa4bf7d00d677dd207d29444ffa3897bed5c787"
       },
       "env": {
         "client": "optional",
         "server": "unsupported"
       },
       "downloads": [
-        "https://cdn.modrinth.com/data/HVnmMxH1/versions/Bqen1mJX/ComplementaryReimagined_r5.9.3.zip"
+        "https://cdn.modrinth.com/data/PGGrfcvL/versions/QTHWcFmF/Better%20Lanterns%20v1.4.0%20-%2026.2%2B26.3.zip"
       ],
-      "fileSize": 553397
+      "fileSize": 83775
+    },
+    {
+      "path": "resourcepacks/Enchantment Glows v1.12.1.zip",
+      "hashes": {
+        "sha1": "d9251675c9c84f144579ca6076b2ec373124d90a",
+        "sha512": "6232c6a2df9a73aecbd0732b61bc3d8d4186b510d273612d9abef021f895bb767a366daf37b0d6f7f2958f10c3262084727581a550f9e5886dc0ebd7c2b97b89"
+      },
+      "env": {
+        "client": "optional",
+        "server": "unsupported"
+      },
+      "downloads": [
+        "https://cdn.modrinth.com/data/m3tqASqD/versions/uaBnfTpO/Enchantment%20Glows%20v1.12.1.zip"
+      ],
+      "fileSize": 2126138
+    },
+    {
+      "path": "resourcepacks/Optimized Bushy Leaves.zip",
+      "hashes": {
+        "sha1": "5595b4f3d1b4376f9fcd2530305dc772adc5fc81",
+        "sha512": "511377107b4bd3a453e2d6c13d41fa67dc5aaa5f2d3927ea8a7e4f48a0fbe429c26e4448b3d040cd1fce2859900684c53ab976bd43f0eb9499e41b59016b16fd"
+      },
+      "env": {
+        "client": "optional",
+        "server": "unsupported"
+      },
+      "downloads": [
+        "https://cdn.modrinth.com/data/pQHHONnS/versions/ZucFW9JT/Optimized%20Bushy%20Leaves.zip"
+      ],
+      "fileSize": 469169
+    },
+    {
+      "path": "shaderpacks/Bliss_v2.1.2_(Chocapic13_Shaders_edit).zip",
+      "hashes": {
+        "sha1": "ded6c8a98305f8aff90ef781e7585b33b8452cfd",
+        "sha512": "dafc60be4980ec40f40edc0f2625cb0976f3c9ce5ed86383146a120480826bb1de70ef5e38b7f1437294ed4d38c6ef3c82ebef0ae4e00b8cee165788c9c18280"
+      },
+      "env": {
+        "client": "optional",
+        "server": "unsupported"
+      },
+      "downloads": [
+        "https://cdn.modrinth.com/data/ZvMtQlho/versions/kC2Y8q1P/Bliss_v2.1.2_%28Chocapic13_Shaders_edit%29.zip"
+      ],
+      "fileSize": 1791406
+    },
+    {
+      "path": "shaderpacks/ComplementaryReimagined_r5.10.zip",
+      "hashes": {
+        "sha1": "ce5f303920c12f858c6b4c27a521fe7a1ba70aea",
+        "sha512": "edced01fb330af215ac73b8d9d31011565089f971f87145b87f413f40ee2128b48970aed26f8e5e879899647ec847b3eefca64bfc013aabbcf25275a207f663d"
+      },
+      "env": {
+        "client": "optional",
+        "server": "unsupported"
+      },
+      "downloads": [
+        "https://cdn.modrinth.com/data/HVnmMxH1/versions/RKfUB9VC/ComplementaryReimagined_r5.10.zip"
+      ],
+      "fileSize": 567387
+    },
+    {
+      "path": "shaderpacks/iterationT 3.2.0.zip",
+      "hashes": {
+        "sha1": "ddadd31e7c59cedadc1e704e5f83c872cb3d5e37",
+        "sha512": "8a5691d9212c89b1be73aeb4a5653cebc75364e7c56a4686abe2e99d622db576baa8d775c6976e528d0e66b765c1c586dac1e8ca13f90f7d3de5f601dcea8864"
+      },
+      "env": {
+        "client": "optional",
+        "server": "unsupported"
+      },
+      "downloads": [
+        "https://edge.forgecdn.net/files/8105/693/iterationT%203.2.0.zip"
+      ],
+      "fileSize": 42846966
+    },
+    {
+      "path": "shaderpacks/photon_v1.4.zip",
+      "hashes": {
+        "sha1": "96c7730f5891a42e39bbf1f0f5a98fa99628a7fe",
+        "sha512": "2dec87084dccf91a72a06235ecbfb3627f066699b5f70583f06077cba61433aedbfa6af28eb68bf1cdc726149cc3d9a587517cfab59e6a24e9d6a40b6874d655"
+      },
+      "env": {
+        "client": "optional",
+        "server": "unsupported"
+      },
+      "downloads": [
+        "https://cdn.modrinth.com/data/lLqFfGNs/versions/BnGklH5y/photon_v1.4.zip"
+      ],
+      "fileSize": 3857333
     }
   ],
   "dependencies": {

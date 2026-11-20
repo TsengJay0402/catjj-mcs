@@ -11,6 +11,7 @@
                 沒標 optional 的客戶端必裝;標 optional 的在 index 裡是 env.client=optional
                 (Prism Launcher 匯入時讓玩家勾選，Modrinth App 目前會全部安裝)
                 可以放模組、光影包、資源包，路徑依 Modrinth 專案類型自動決定
+    external-assets.json (選用)提供非 Modrinth 素材的官方 HTTPS 下載連結和 SHA-1/SHA-512
     overrides/  (選用)要原樣放進客戶端 .minecraft 的檔案，例如預設設定檔
 
 產物:
@@ -26,7 +27,7 @@ import sys
 import urllib.parse
 import urllib.request
 import zipfile
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 API = "https://api.modrinth.com/v2"
 USER_AGENT = "catjj-mcs/build-mrpack (github.com/TsengJay0402/catjj-mcs)"
@@ -129,6 +130,78 @@ def build_index(pack_dir: Path) -> dict:
                 warnings.append(f"{slug}: 略過 Modrinth 標示的依賴 {dp['slug']}(沒有 Fabric 版，應是標錯)")
             else:
                 errors.append(f"{slug}: 缺少必要依賴 {dp['slug'] if dp else dep_project}")
+
+    external_path = pack_dir / "external-assets.json"
+    if external_path.exists():
+        try:
+            external_manifest = json.loads(external_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as exc:
+            errors.append(f"{external_path}: 無法讀取 JSON ({exc})")
+            external_manifest = {}
+        external_files = external_manifest.get("files") if isinstance(external_manifest, dict) else None
+        if not isinstance(external_files, list):
+            errors.append(f"{external_path}: files 必須是陣列")
+        else:
+            paths = {f["path"] for f in files}
+            env_values = {"required", "optional", "unsupported"}
+            for index, asset in enumerate(external_files, 1):
+                label = f"{external_path}:files[{index - 1}]"
+                if not isinstance(asset, dict):
+                    errors.append(f"{label}: 每個素材都必須是物件")
+                    continue
+                path = asset.get("path")
+                url = asset.get("url")
+                hashes = asset.get("hashes")
+                size = asset.get("fileSize")
+                env = asset.get("env")
+                source = asset.get("source")
+                if not isinstance(path, str) or not path or "\\" in path:
+                    errors.append(f"{label}: path 必須是相對 POSIX 路徑")
+                    continue
+                asset_path = PurePosixPath(path)
+                if (asset_path.is_absolute() or path != asset_path.as_posix()
+                        or ".." in asset_path.parts
+                        or not asset_path.parts
+                        or asset_path.parts[0] not in FOLDERS.values()):
+                    errors.append(f"{label}: 不允許的路徑 {path!r}")
+                    continue
+                parsed_url = urllib.parse.urlparse(url) if isinstance(url, str) else None
+                if not parsed_url or parsed_url.scheme != "https" or not parsed_url.netloc:
+                    errors.append(f"{label}: url 必須是 HTTPS 下載連結")
+                    continue
+                if not isinstance(hashes, dict):
+                    errors.append(f"{label}: hashes 必須包含 SHA-1 和 SHA-512")
+                    continue
+                sha1, sha512 = hashes.get("sha1"), hashes.get("sha512")
+                if (not isinstance(sha1, str) or len(sha1) != 40
+                        or not isinstance(sha512, str) or len(sha512) != 128
+                        or any(c not in "0123456789abcdefABCDEF" for c in sha1 + sha512)):
+                    errors.append(f"{label}: SHA-1/SHA-512 格式錯誤")
+                    continue
+                if not isinstance(size, int) or isinstance(size, bool) or size <= 0:
+                    errors.append(f"{label}: fileSize 必須是正整數")
+                    continue
+                if (not isinstance(env, dict)
+                        or not isinstance(env.get("client"), str)
+                        or env.get("client") not in env_values
+                        or not isinstance(env.get("server"), str)
+                        or env.get("server") not in env_values):
+                    errors.append(f"{label}: env.client/env.server 值錯誤")
+                    continue
+                if not isinstance(source, str) or not source.strip():
+                    errors.append(f"{label}: source 必須註明官方來源")
+                    continue
+                if path in paths:
+                    errors.append(f"{label}: 重複的檔案路徑 {path!r}")
+                    continue
+                paths.add(path)
+                files.append({
+                    "path": path,
+                    "hashes": {"sha1": sha1.lower(), "sha512": sha512.lower()},
+                    "env": env,
+                    "downloads": [url],
+                    "fileSize": size,
+                })
 
     for w in warnings:
         print(f"注意:{w}", file=sys.stderr)
