@@ -17,12 +17,18 @@
 產物:
     <pack>/modrinth.index.json   會 commit 進 repo,升級時 diff 看得到檔名和雜湊變化
     dist/<name>-<version>.mrpack 用 Modrinth App / Prism Launcher 匯入
+    dist/packwiz/                packwiz 格式(pack.toml、index.toml、*.pw.toml),
+                                 發佈 tag 時由 CI 推到 techsmp-client-pack 分支，給 Prism + packwiz-installer 自動更新用
+                                 選用模組的說明取自 mods.txt 該行 # 之後的註解
 只使用標準函式庫，不需要額外安裝套件。
 """
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
+import re
+import shutil
 import sys
 import urllib.parse
 import urllib.request
@@ -58,9 +64,23 @@ def read_mods(path: Path) -> list[tuple[str, str, bool]]:
     return mods
 
 
-def build_index(pack_dir: Path) -> dict:
+def read_comments(path: Path) -> dict[str, str]:
+    """回傳 slug -> 該行 # 之後的註解(給 packwiz 選用模組視窗當說明)。"""
+    comments = {}
+    for raw in path.read_text(encoding="utf-8").splitlines():
+        code, _, comment = raw.partition("#")
+        tokens = code.split()
+        if tokens:
+            comments[tokens[0].partition(":")[0]] = comment.strip()
+    return comments
+
+
+def build_index(pack_dir: Path) -> tuple[dict, dict[str, dict]]:
+    """回傳 (modrinth.index.json 內容, 每個檔案路徑的額外資訊)。額外資訊只給 packwiz 用，不進 index。"""
     pack = json.loads((pack_dir / "pack.json").read_text(encoding="utf-8"))
     mods = read_mods(pack_dir / "mods.txt")
+    comments = read_comments(pack_dir / "mods.txt")
+    meta: dict[str, dict] = {}
     mc, loader = pack["minecraft"], pack["fabric-loader"]
 
     versions = {v["id"]: v for v in api_get("/versions", ids=[vid for _, vid, _ in mods])}
@@ -95,6 +115,12 @@ def build_index(pack_dir: Path) -> dict:
             server = p["server_side"]
         else:
             server = "unsupported" if p["project_type"] != "mod" else "optional"
+        meta[f"{FOLDERS[p['project_type']]}/{f['filename']}"] = {
+            "id": slug,
+            "name": p["title"],
+            "description": comments.get(slug, ""),
+            "update": ("modrinth", {"mod-id": p["id"], "version": vid}),
+        }
         files.append({
             "path": f"{FOLDERS[p['project_type']]}/{f['filename']}",
             "hashes": {"sha1": f["hashes"]["sha1"], "sha512": f["hashes"]["sha512"]},
@@ -195,6 +221,14 @@ def build_index(pack_dir: Path) -> dict:
                     errors.append(f"{label}: 重複的檔案路徑 {path!r}")
                     continue
                 paths.add(path)
+                cf = re.fullmatch(r"CurseForge project (\d+), file (\d+)", source.strip())
+                stem = PurePosixPath(path).stem
+                meta[path] = {
+                    "id": re.sub(r"[^a-z0-9.-]+", "-", stem.lower()).strip("-"),
+                    "name": stem,
+                    "description": source.strip(),
+                    "update": ("curseforge", {"project-id": int(cf[1]), "file-id": int(cf[2])}) if cf else None,
+                }
                 files.append({
                     "path": path,
                     "hashes": {"sha1": sha1.lower(), "sha512": sha512.lower()},
@@ -208,7 +242,7 @@ def build_index(pack_dir: Path) -> dict:
     if errors:
         sys.exit("模組清單有問題:\n  " + "\n  ".join(errors))
 
-    return {
+    index = {
         "formatVersion": 1,
         "game": "minecraft",
         "versionId": pack["version"],
@@ -217,6 +251,86 @@ def build_index(pack_dir: Path) -> dict:
         "files": sorted(files, key=lambda x: x["path"]),
         "dependencies": {"minecraft": mc, "fabric-loader": loader},
     }
+    return index, meta
+
+
+def toml_str(value: str) -> str:
+    # JSON 字串的跳脫(\" \\ \n \uXXXX)也是合法的 TOML basic string
+    return json.dumps(value, ensure_ascii=False)
+
+
+def write_packwiz(pack_dir: Path, index: dict, meta: dict[str, dict], out_dir: Path) -> Path:
+    """依 packwiz 格式(https://packwiz.infra.link/reference/pack-format/)輸出整個模組包資料夾。"""
+    shutil.rmtree(out_dir, ignore_errors=True)
+    out_dir.mkdir(parents=True)
+    entries: list[tuple[str, str, bool]] = []  # (相對路徑, sha256, 是否為 metafile)
+
+    def put(rel: str, data: bytes, metafile: bool) -> None:
+        target = out_dir / rel
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(data)
+        entries.append((rel, hashlib.sha256(data).hexdigest(), metafile))
+
+    used: set[str] = set()
+    for f in index["files"]:
+        m = meta[f["path"]]
+        folder, filename = f["path"].rsplit("/", 1)
+        rel = f"{folder}/{m['id']}.pw.toml"
+        if rel in used:
+            sys.exit(f"packwiz: 檔名重複 {rel}")
+        used.add(rel)
+        # 這是客戶端模組包；伺服器也要裝的標成 both,packwiz-installer 預設(client 端)兩種都會裝
+        side = "both" if f["env"]["server"] in ("required", "optional") else "client"
+        lines = [
+            f"name = {toml_str(m['name'])}",
+            f"filename = {toml_str(filename)}",
+            f"side = {toml_str(side)}",
+            "",
+            "[download]",
+            f"url = {toml_str(f['downloads'][0])}",
+            'hash-format = "sha512"',
+            f"hash = {toml_str(f['hashes']['sha512'])}",
+        ]
+        if f["env"]["client"] == "optional":
+            # 和 .mrpack 在 Prism 的行為一致：選用模組預設不勾
+            lines += ["", "[option]", "optional = true", "default = false"]
+            if m["description"]:
+                lines.append(f"description = {toml_str(m['description'])}")
+        if m["update"]:
+            source, fields = m["update"]
+            lines += ["", f"[update.{source}]"]
+            lines += [f"{k} = {toml_str(v) if isinstance(v, str) else v}" for k, v in fields.items()]
+        put(rel, ("\n".join(lines) + "\n").encode("utf-8"), metafile=True)
+
+    overrides = pack_dir / "overrides"
+    if overrides.is_dir():
+        for p in sorted(x for x in overrides.rglob("*") if x.is_file()):
+            put(p.relative_to(overrides).as_posix(), p.read_bytes(), metafile=False)
+
+    index_lines = ['hash-format = "sha256"']
+    for rel, digest, metafile in sorted(entries):
+        index_lines += ["", "[[files]]", f"file = {toml_str(rel)}", f"hash = {toml_str(digest)}"]
+        if metafile:
+            index_lines.append("metafile = true")
+    index_data = ("\n".join(index_lines) + "\n").encode("utf-8")
+    (out_dir / "index.toml").write_bytes(index_data)
+
+    pack_toml = "\n".join([
+        f"name = {toml_str(index['name'])}",
+        f"version = {toml_str(index['versionId'])}",
+        'pack-format = "packwiz:1.1.0"',
+        "",
+        "[index]",
+        'file = "index.toml"',
+        'hash-format = "sha256"',
+        f"hash = {toml_str(hashlib.sha256(index_data).hexdigest())}",
+        "",
+        "[versions]",
+        f"minecraft = {toml_str(index['dependencies']['minecraft'])}",
+        f"fabric = {toml_str(index['dependencies']['fabric-loader'])}",
+    ]) + "\n"
+    (out_dir / "pack.toml").write_text(pack_toml, encoding="utf-8", newline="\n")
+    return out_dir
 
 
 def write_mrpack(pack_dir: Path, index: dict, out_dir: Path) -> Path:
@@ -243,7 +357,7 @@ def main() -> None:
     ap.add_argument("--check", action="store_true", help="只檢查 modrinth.index.json 是否和 mods.txt 一致，不寫檔")
     args = ap.parse_args()
 
-    index = build_index(args.pack_dir)
+    index, meta = build_index(args.pack_dir)
     index_path = args.pack_dir / "modrinth.index.json"
     rendered = json.dumps(index, indent=2, ensure_ascii=False) + "\n"
 
@@ -256,8 +370,9 @@ def main() -> None:
 
     index_path.write_text(rendered, encoding="utf-8")
     out = write_mrpack(args.pack_dir, index, args.out)
+    pw = write_packwiz(args.pack_dir, index, meta, args.out / "packwiz")
     optional = sum(f["env"]["client"] == "optional" for f in index["files"])
-    print(f"{index['name']} {index['versionId']}:{len(index['files'])} 個檔案(選用 {optional})→ {index_path}、{out}")
+    print(f"{index['name']} {index['versionId']}:{len(index['files'])} 個檔案(選用 {optional})→ {index_path}、{out}、{pw}")
     for f in index["files"]:
         print(f"  {f['path']:<60} client={f['env']['client']:<8} server={f['env']['server']}")
 

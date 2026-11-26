@@ -9,12 +9,14 @@ on:
     paths:
       - "techsmp/client/**"
       - "tools/build-mrpack.py"
+      - "tools/build-curseforge.py"
       - ".github/workflows/techsmp-client.yml"
     tags: ["techsmp-client-v*"]
   pull_request:
     paths:
       - "techsmp/client/**"
       - "tools/build-mrpack.py"
+      - "tools/build-curseforge.py"
   workflow_dispatch:
 
 permissions:
@@ -45,9 +47,36 @@ jobs:
           name: TechSMP-mrpack
           path: dist/*.mrpack
 
+      # 給 CurseForge App 匯入的 zip;需要 repo secret CURSEFORGE_API_KEY,沒設定就略過
+      - name: Build CurseForge zip
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
+        run: |
+          if [ -z "$CURSEFORGE_API_KEY" ]; then
+            echo "::warning::沒有設定 CURSEFORGE_API_KEY secret,這次不產生 CurseForge 包"
+            exit 0
+          fi
+          python3 tools/build-curseforge.py techsmp/client --out dist
+
       - name: Publish release
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v3
         with:
-          files: dist/*.mrpack
+          files: |
+            dist/*.mrpack
+            dist/*-curseforge.zip
           generate_release_notes: true
+
+      # Prism + packwiz-installer 從這個分支讀 pack.toml,只有發佈 tag 才更新，main 上未發佈的改動不會推到玩家
+      - name: Publish packwiz branch
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd dist/packwiz
+          git init -q -b techsmp-client-pack
+          git add -A
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            commit -q -m "TechSMP client pack ${GITHUB_REF_NAME}"
+          git push -f "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:techsmp-client-pack
