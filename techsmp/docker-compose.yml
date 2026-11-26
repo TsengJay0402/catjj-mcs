@@ -51,6 +51,9 @@ services:
       SYNC_SKIP_NEWER_IN_DESTINATION: "false"
       # 版本釘死(Modrinth version ID,2026-11-17 查證),避免重啟時自動升級導致客戶端對不上
       MODRINTH_DOWNLOAD_DEPENDENCIES: required
+      MODS: |
+        https://edge.forgecdn.net/files/9712/118/lodeways-fabric-26.3-1.20.0.jar
+        https://edge.forgecdn.net/files/9372/945/Backpackery-2.3.5-mc26.3-fabric.jar
       MODRINTH_PROJECTS: |
         fabric-api:Zns5SSRA
         fabric-language-kotlin:SKW1BTL3
@@ -104,6 +107,9 @@ services:
       ENABLE_ROLLING_LOGS: "true"
       SYNC_SKIP_NEWER_IN_DESTINATION: "false"
       MODRINTH_DOWNLOAD_DEPENDENCIES: required
+      MODS: |
+        https://edge.forgecdn.net/files/9712/118/lodeways-fabric-26.3-1.20.0.jar
+        https://edge.forgecdn.net/files/9372/945/Backpackery-2.3.5-mc26.3-fabric.jar
       MODRINTH_PROJECTS: |
         fabric-api:Zns5SSRA
         carpet:yt9oDFOj

@@ -13,6 +13,34 @@
         "server": "unsupported"
       },
       "source": "CurseForge project 1546329, file 8105693"
+    },
+    {
+      "path": "mods/lodeways-fabric-26.3-1.20.0.jar",
+      "url": "https://edge.forgecdn.net/files/9712/118/lodeways-fabric-26.3-1.20.0.jar",
+      "hashes": {
+        "sha1": "dc35714897ffa7ddeeb47f2fa6e04919459bd335",
+        "sha512": "78613256962783ade1748b23e6dd8aac73668dce77a8e51b81fc9ddb521a64e7bf5eb5e7c6657c180437242196861c30607982f5cb5dec8908c199695bcb9cb5"
+      },
+      "fileSize": 65822,
+      "env": {
+        "client": "required",
+        "server": "required"
+      },
+      "source": "CurseForge project 1739944, file 9712118"
+    },
+    {
+      "path": "mods/Backpackery-2.3.5-mc26.3-fabric.jar",
+      "url": "https://edge.forgecdn.net/files/9372/945/Backpackery-2.3.5-mc26.3-fabric.jar",
+      "hashes": {
+        "sha1": "9e74db6c74dbeda1cc16c17e20faec605074dcdb",
+        "sha512": "368ec127a1116c1983ee3f637bd308054bafccac078d8a47c589a1b50c2a1becf2905b9fbb4aa1d421dbc7c9044ba14791fb5c52a6b11c09fb5ffaa54d1377a7"
+      },
+      "fileSize": 423304,
+      "env": {
+        "client": "required",
+        "server": "required"
+      },
+      "source": "CurseForge project 1764739, file 9372945"
     }
   ]
 }
