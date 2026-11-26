@@ -29,6 +29,7 @@ minihud:WfIgkxnf                     # 0.41.2
 tweakeroo:fWxKATn6                   # 0.30.1
 item-scroller:MvoqaGhE               # 0.33.1
 syncmatica:uT7TJ2Wp                  # 0.3.20(伺服器也有裝，版本要一致)
+litematica-printer:gnQ8CGTG optional # 3.2.3(照 Litematica 投影自動放方塊，CAPS_LOCK 開關、按住 V 放置；只需裝客戶端)
 
 # ── 連鎖挖礦(按住快捷鍵觸發，預設 Y,建議改成 `)──
 veinminer:T4so6NOu                   # 2.14.0(伺服器也有裝，版本要一致)

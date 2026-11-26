@@ -1,6 +1,6 @@
 {
   "name": "TechSMP",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "summary": "TechSMP 客戶端包：建築/生電工具與視覺選項。注意：遠視距、光影、高解析材質會增加電腦負荷；Distant Horizons 官方建議 Minecraft 分配 RAM（4–8 核：6–8GB；10+ 核：12–16GB），其他項目未公布最低規格。",
   "minecraft": "26.3",
   "fabric-loader": "0.20.1"
