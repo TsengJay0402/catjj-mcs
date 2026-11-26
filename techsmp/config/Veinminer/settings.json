@@ -2,7 +2,7 @@
     "cooldown": 20,
     "mustSneak": false,
     "delay": 0,
-    "maxChain": 100,
+    "maxChain": 1000,
     "needCorrectTool": true,
     "searchRadius": 1,
     "permissionRestricted": false,

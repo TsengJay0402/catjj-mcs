@@ -2,7 +2,7 @@
   "__comment": "For help with the config refer to https://github.com/Flemmli97/Flan/wiki/Config",
   "configVersion": 7,
   "startingBlocks": 3000,
-  "maxClaimBlocks": 5000,
+  "maxClaimBlocks": -1,
   "ticksForNextBlock": 600,
   "minClaimsize": 100,
   "defaultClaimDepth": 10,
