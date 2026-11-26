@@ -73,6 +73,7 @@ services:
       - ./data:/data
       - ./config:/config:ro
       - ./datapacks/flan-owner-flight:/data/world/datapacks/flan-owner-flight:ro
+      - ./datapacks/backpackery-recipe-unlock:/data/world/datapacks/backpackery-recipe-unlock:ro
 
   # 創造鏡像服：世界由 refresh-mirror.sh 從生存服同步過來，用來測機器、用 Servux 帶 NBT 快速貼投影
   mirror:

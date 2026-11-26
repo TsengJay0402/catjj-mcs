@@ -1,0 +1,13 @@
+{
+  "pack": {
+    "description": "TechSMP: give every player all Backpackery recipes once (works around a disconnect on mid-game recipe unlock)",
+    "min_format": [
+      82,
+      0
+    ],
+    "max_format": [
+      9999,
+      0
+    ]
+  }
+}
