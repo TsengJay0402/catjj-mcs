@@ -1,0 +1,12 @@
+name = "lodeways-fabric-26.3-1.20.0"
+filename = "lodeways-fabric-26.3-1.20.0.jar"
+side = "both"
+
+[download]
+url = "https://edge.forgecdn.net/files/9712/118/lodeways-fabric-26.3-1.20.0.jar"
+hash-format = "sha512"
+hash = "78613256962783ade1748b23e6dd8aac73668dce77a8e51b81fc9ddb521a64e7bf5eb5e7c6657c180437242196861c30607982f5cb5dec8908c199695bcb9cb5"
+
+[update.curseforge]
+project-id = 1739944
+file-id = 9712118

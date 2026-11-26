@@ -1,0 +1,17 @@
+name = "Optimized Bushy Leaves"
+filename = "Optimized Bushy Leaves.zip"
+side = "client"
+
+[download]
+url = "https://cdn.modrinth.com/data/pQHHONnS/versions/ZucFW9JT/Optimized%20Bushy%20Leaves.zip"
+hash-format = "sha512"
+hash = "511377107b4bd3a453e2d6c13d41fa67dc5aaa5f2d3927ea8a7e4f48a0fbe429c26e4448b3d040cd1fce2859900684c53ab976bd43f0eb9499e41b59016b16fd"
+
+[option]
+optional = true
+default = false
+description = "v4.3(立體樹葉；需 Fancy Leaves，建議搭配 More Culling)"
+
+[update.modrinth]
+mod-id = "pQHHONnS"
+version = "ZucFW9JT"

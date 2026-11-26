@@ -1,0 +1,12 @@
+name = "Backpackery-2.3.5-mc26.3-fabric"
+filename = "Backpackery-2.3.5-mc26.3-fabric.jar"
+side = "both"
+
+[download]
+url = "https://edge.forgecdn.net/files/9372/945/Backpackery-2.3.5-mc26.3-fabric.jar"
+hash-format = "sha512"
+hash = "368ec127a1116c1983ee3f637bd308054bafccac078d8a47c589a1b50c2a1becf2905b9fbb4aa1d421dbc7c9044ba14791fb5c52a6b11c09fb5ffaa54d1377a7"
+
+[update.curseforge]
+project-id = 1764739
+file-id = 9372945
